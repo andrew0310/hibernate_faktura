@@ -7,18 +7,18 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateUtil {
-    private static SessionFactory sessionFactory;
+        private static SessionFactory sessionFactory;
 
-    static {
-        //Tworzymy sobie obiekt, który pobiera konfigurację z pliku hibernate.cfg.xml
-        StandardServiceRegistry standardServiceRegistry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
-        Metadata metadata = new MetadataSources(standardServiceRegistry).getMetadataBuilder().build();
+        static {
+            //Tworzymy sobie obiekt, który pobiera konfigurację z pliku hibernate.cfg.xml
+            StandardServiceRegistry standardServiceRegistry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+            Metadata metadata = new MetadataSources(standardServiceRegistry).getMetadataBuilder().build();
 
-        //tworzenie sesji z danych zawartych w pliku hibernate.cfg.xml
-        sessionFactory = metadata.getSessionFactoryBuilder().build();
-    }
+            //tworzenie sesji z danych zawartych w pliku hibernate.cfg.xml
+            sessionFactory = metadata.getSessionFactoryBuilder().build();
+        }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+        public static SessionFactory getSessionFactory() {
+            return sessionFactory;
+        }
 }
