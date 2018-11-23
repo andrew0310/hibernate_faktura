@@ -1,6 +1,7 @@
 package com.sda.fakturownia;
 
 
+import com.sda.firma.Platnik;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
@@ -10,9 +11,9 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FakturaDao {
+public class FakturaDao extends BaseEntity{
 
-    public boolean savesInvoiceIntoDatabase(DrukarkaFaktur drukarkaFaktur) {
+    public boolean savesIntoDatabase(BaseEntity baseEntity) {
 
         //pobieram session factory (fabryka połączenia z bazą)
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -21,7 +22,7 @@ public class FakturaDao {
 
             //otwieram transakcję
             transaction = session.beginTransaction();
-            session.save(drukarkaFaktur);  //dokonujemy zapisu w bazie
+            session.save(baseEntity);  //dokonujemy zapisu w bazie
             transaction.commit();          //zamykam transakcję i zatwierdzam zmiany
 
         } catch (SessionException se) {
@@ -54,5 +55,21 @@ public class FakturaDao {
         //jeśli nie uda się znaleźć zwraca pustą listę
         return new ArrayList<>();
 
+    }
+
+    public List<Platnik> getAllPlatnikFromDatabase() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
+        try (Session session = sessionFactory.openSession()) {
+
+            Query<Platnik> query = session.createQuery("from Platnik df", Platnik.class);
+
+            List<Platnik> drukarkaFaktur = query.list();
+            return drukarkaFaktur;
+
+        } catch (SessionException se) {
+            System.err.println("Nie udało się pobrać z bazy!");
+        }
+        return new ArrayList<>();
     }
 }

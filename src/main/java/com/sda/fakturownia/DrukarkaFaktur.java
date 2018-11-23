@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class DrukarkaFaktur {
+public class DrukarkaFaktur extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

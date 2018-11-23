@@ -1,9 +1,11 @@
 package com.sda.firma;
 
+import com.sda.fakturownia.BaseEntity;
 import com.sda.fakturownia.DrukarkaFaktur;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,8 +14,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class Company {
+@ToString(exclude = {"drukarkaFaktur", "platnik"})
+public class Company extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,4 +27,7 @@ public class Company {
 
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
     private List<DrukarkaFaktur> drukarkaFaktur;
+
+    @ManyToMany(mappedBy = "company", fetch = FetchType.LAZY)
+    private List<Platnik> platnik;
 }
